@@ -14,10 +14,11 @@ $(EXEC): $(DEPENDENCIES)
 	rm *.o
 	
 
-lib.a: lib.o
-	ar rcs lib.a lib.o
+$(LIB): lib.o
+	ar rcs $@ lib.o
 
 clean:
+	rm $(LIB)
 	rm test		
 	rm fichier.stl  
-	rm lib.a
+	
