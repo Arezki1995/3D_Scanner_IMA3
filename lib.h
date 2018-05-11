@@ -1,3 +1,6 @@
+#define RAD_RES_MAX 200    // Nombre max de pas par revolution Nema17
+#define RES_Z_AXIS  150    // Nombre max de points sur 15cm avec un tour/mm
+
 #define SIZE 10 
 
 //######################################################################
