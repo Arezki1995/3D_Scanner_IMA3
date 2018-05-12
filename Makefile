@@ -10,12 +10,13 @@ LIB = lib.a
 
 
 $(EXEC): $(DEPENDENCIES)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ -lm
 	rm *.o
 	
 
 $(LIB): lib.o
 	ar rcs $@ lib.o
+
 
 clean:
 	rm $(LIB)
