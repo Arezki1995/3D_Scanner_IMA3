@@ -4,7 +4,7 @@
 #include<math.h>
 #include"lib.h"
 
-#define H_FACTOR 0.5
+#define H_FACTOR 1
 int precision;
 int k ;        // Nombre de facets dans solid crée 
 //#####################################################################################
@@ -45,7 +45,7 @@ printf("Precision =%d\n",precision);
 //	int NB_layers = RES_Z_AXIS/precision; 	
 //	int NB_points_niv = RAD_RES_MAX/precision ;
 int NB_layers =3; 	
-int NB_points_niv = 9 ;
+int NB_points_niv = 4 ;
 		
 //CREATION DE LA MATRICE REPRESENTANT UN NUAGE DE POINT ACQUIS
 	Vertex** grille = VMatrix_allocate(NB_layers, NB_points_niv);
@@ -114,7 +114,7 @@ void VMatrix_to_stl (Vertex** VMat, int NB_layers, int NB_points_niv){
 			}
 			else if(i==NB_layers-1){	
 				//closing object from top				
-				Vertex virtual_up = getVertex(0,0, i*H_FACTOR*precision );
+				Vertex virtual_up = getVertex(0,0, i );
 				facet_array[k]   = makeFacet( VMat[i][j]           ,VMat[i][(j+1)%modj]   ,virtual_up);
 				k++;
 			}
