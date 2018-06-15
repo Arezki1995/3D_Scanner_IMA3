@@ -44,13 +44,15 @@ printf("Precision =%d\n",precision);
 
 //	int NB_layers = RES_Z_AXIS/precision; 	
 //	int NB_points_niv = RAD_RES_MAX/precision ;
-int NB_layers =3; 	
+int NB_layers =5; 	
 int NB_points_niv = 4 ;
 		
 //CREATION DE LA MATRICE REPRESENTANT UN NUAGE DE POINT ACQUIS
 	Vertex** grille = VMatrix_allocate(NB_layers, NB_points_niv);
 	VMatrix_init_final(grille, NB_layers,NB_points_niv);
-	
+	VMatrix_disp(grille,NB_layers,NB_points_niv);
+
+
 	VMatrix_to_stl (grille, NB_layers, NB_points_niv);
 
 
@@ -96,7 +98,7 @@ void FacetArray_free(Facet* facet_array){
 //#######################################################################################
 void VMatrix_to_stl (Vertex** VMat, int NB_layers, int NB_points_niv){
 
-	int k=0; // nombre de facet qui seront crées pendant l'iteration
+	int k=0; // compte le nombre de facet qui seront crées pendant l'iteration
 	int modj = NB_points_niv;
 	
 	
@@ -108,14 +110,16 @@ void VMatrix_to_stl (Vertex** VMat, int NB_layers, int NB_points_niv){
 			//Refer to the draft paper half cut on your desk
 
 			if(i!=(NB_layers-1) && (i!=-1)){
-				facet_array[k]   = makeFacet( VMat[i][j]           ,VMat[i][(j+1)%modj] ,VMat[i+1][j]);
+				//facet_array[k]   = makeFacet( VMat[i][j]           ,VMat[i][(j+1)%modj] ,VMat[i+1][j]);
+				facet_array[k]   = makeFacet( VMat[i][(j+1)%modj]  ,VMat[i][j]           ,VMat[i+1][j]);
 				facet_array[k+1] = makeFacet( VMat[i][(j+1)%modj]  ,VMat[i+1][j]        ,VMat[i+1][(j+1)%modj]);
+				
 				k=k+2;
 			}
 			else if(i==NB_layers-1){	
 				//closing object from top				
 				Vertex virtual_up = getVertex(0,0, i );
-				facet_array[k]   = makeFacet( VMat[i][j]           ,VMat[i][(j+1)%modj]   ,virtual_up);
+				facet_array[k]   = makeFacet( VMat[i][(j+1)%modj] ,VMat[i][j]   ,virtual_up);
 				k++;
 			}
 			else{
