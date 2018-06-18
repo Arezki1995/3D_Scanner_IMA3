@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery.js"></script>
+    <script type="text/javascript">
+window.WebSocket=(window.WebSocket||window.MozWebSocket);
+var websocket=new WebSocket('ws://'+location.host+':9000','serial');
+
+websocket.onopen=function(){ $('h1').css('color','green'); };
+
+websocket.onerror=function(){ $('h1').css('color','red'); };
+
+websocket.onmessage=function(message){
+$('#messages').html(message.data);
+};
+
+function sendMessage(data){
+websocket.send(data);
+}
+    </script>
+  </head>
+  <body>
+    <h1>Contrôle des LEDs</h1>
+    <button onclick="sendMessage(1);">Led1 allumer</button>
+    <button onclick="sendMessage(129);">Led1 éteindre</button>
+    <br/>
+    <button onclick="sendMessage(2);">Led2 allumer</button>
+    <button onclick="sendMessage(130);">Led2 éteindre</button>
+
+    <h1>Etat des boutons</h1>
+    <div id="messages"></div>
+  </body>
+</html>
